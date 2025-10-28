@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../context/AuthContext.jsx';
 import Button from '../components/Button.jsx';
-import axios from '../utils/api.js';
+// import axios from '../utils/api.js'; // Commented out - uncomment when backend is ready
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -13,36 +13,54 @@ const schema = yup.object({
 });
 
 const Profile = () => {
-  const { user, token } = useAuth();
+  const { token } = useAuth(); // Removed unused 'user'
   const [loading, setLoading] = useState(true);
   const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
+  // Commented out backend API call - uncomment when backend is ready
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const response = await axios.get('/api/users/profile/');
+  //       const data = response.data;
+  //       setValue('email', data.email);
+  //       setValue('mpesa_number', data.mpesa_number);
+  //       setValue('deriv_account_id', data.deriv_account_id);
+  //     } catch (error) {
+  //       alert('Failed to load profile');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   if (token) fetchProfile();
+  // }, [token, setValue]);
+
+  // Temporary: Set dummy data for frontend testing
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get('/api/users/profile/');
-        const data = response.data;
-        setValue('email', data.email);
-        setValue('mpesa_number', data.mpesa_number);
-        setValue('deriv_account_id', data.deriv_account_id);
-      } catch (error) {
-        alert('Failed to load profile');
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (token) fetchProfile();
+    if (token) {
+      setValue('email', 'user@example.com');
+      setValue('mpesa_number', '+254712345678');
+      setValue('deriv_account_id', '123456789');
+      setLoading(false);
+    }
   }, [token, setValue]);
 
-  const onSubmit = async (data) => {
-    try {
-      await axios.put('/api/users/profile/', data);
-      alert('Profile updated successfully');
-    } catch (error) {
-      alert('Update failed');
-    }
+  // Commented out backend API call - uncomment when backend is ready
+  // const onSubmit = async (data) => {
+  //   try {
+  //     await axios.put('/api/users/profile/', data);
+  //     alert('Profile updated successfully');
+  //   } catch (error) {
+  //     alert('Update failed');
+  //   }
+  // };
+
+  // Temporary: Mock update for frontend testing
+  const onSubmit = (data) => {
+    console.log('Profile update data:', data);
+    alert('Profile updated successfully (mocked)');
   };
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;

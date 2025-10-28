@@ -1,63 +1,95 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../context/AuthContext.jsx';
+// import { useAuth } from '../context/AuthContext.jsx'; // Commented out - uncomment when backend is ready
 import Button from '../components/Button.jsx';
-import axios from '../utils/api.js';
+// import axios from '../utils/api.js'; // Commented out - uncomment when backend is ready
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth(); // Removed unused 'user'
   const [users, setUsers] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [settings, setSettings] = useState({ exchangeRate: 150, fee: 20 }); // Default values
   const [liquidity, setLiquidity] = useState({ totalKes: 0, totalUsd: 0 });
   const [loading, setLoading] = useState(true);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm(); // Removed unused 'reset'
 
-  // Check if user is admin (add this check in AuthContext or backend)
-  if (!user || !user.is_admin) {
-    return <div className="text-center mt-10 text-red-500">Access Denied: Admin Only</div>;
-  }
+  // Temporary: Mock admin check for frontend testing
+  // if (!user || !user.is_admin) {
+  //   return <div className="text-center mt-10 text-red-500">Access Denied: Admin Only</div>;
+  // }
 
+  // Commented out backend API calls - uncomment when backend is ready
+  // useEffect(() => {
+  //   fetchAdminData();
+  // }, []);
+
+  // const fetchAdminData = async () => {
+  //   try {
+  //     const [usersRes, txRes, settingsRes, liquidityRes] = await Promise.all([
+  //       axios.get('/api/admin/users/'),
+  //       axios.get('/api/admin/transactions/'),
+  //       axios.get('/api/admin/settings/'),
+  //       axios.get('/api/admin/liquidity/'),
+  //     ]);
+  //     setUsers(usersRes.data);
+  //     setTransactions(txRes.data);
+  //     setSettings(settingsRes.data);
+  //     setLiquidity(liquidityRes.data);
+  //   } catch (error) {
+  //     alert('Failed to load admin data');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const updateSettings = async (data) => {
+  //   try {
+  //     await axios.put('/api/admin/settings/', data);
+  //     setSettings(data);
+  //     alert('Settings updated');
+  //   } catch (error) {
+  //     alert('Update failed');
+  //   }
+  // };
+
+  // const handleTransactionAction = async (id, action) => {
+  //   try {
+  //     await axios.post(`/api/admin/transactions/${id}/${action}/`);
+  //     fetchAdminData(); // Refresh data
+  //   } catch (error) {
+  //     alert(`${action} failed`);
+  //   }
+  // };
+
+  // Temporary: Mock admin data for frontend testing
   useEffect(() => {
     fetchAdminData();
   }, []);
 
   const fetchAdminData = async () => {
-    try {
-      const [usersRes, txRes, settingsRes, liquidityRes] = await Promise.all([
-        axios.get('/api/admin/users/'),
-        axios.get('/api/admin/transactions/'),
-        axios.get('/api/admin/settings/'),
-        axios.get('/api/admin/liquidity/'),
-      ]);
-      setUsers(usersRes.data);
-      setTransactions(txRes.data);
-      setSettings(settingsRes.data);
-      setLiquidity(liquidityRes.data);
-    } catch (error) {
-      alert('Failed to load admin data');
-    } finally {
-      setLoading(false);
-    }
+    // Mock data
+    setUsers([
+      { id: 1, username: 'user1', email: 'user1@example.com', mpesa_number: '+254712345678', deriv_account_id: '123456' },
+      { id: 2, username: 'user2', email: 'user2@example.com', mpesa_number: '+254798765432', deriv_account_id: '654321' },
+    ]);
+    setTransactions([
+      { id: 1, user: { username: 'user1' }, transaction_type: 'deposit', amount_kes: 5000, amount_usd: 33.33, status: 'completed' },
+      { id: 2, user: { username: 'user2' }, transaction_type: 'withdraw', amount_kes: 7500, amount_usd: 50, status: 'pending' },
+    ]);
+    setSettings({ exchangeRate: 150, fee: 20 });
+    setLiquidity({ totalKes: 100000, totalUsd: 667 });
+    setLoading(false);
   };
 
   const updateSettings = async (data) => {
-    try {
-      await axios.put('/api/admin/settings/', data);
-      setSettings(data);
-      alert('Settings updated');
-    } catch (error) {
-      alert('Update failed');
-    }
+    console.log('Update settings:', data);
+    setSettings(data);
+    alert('Settings updated (mocked)');
   };
 
   const handleTransactionAction = async (id, action) => {
-    try {
-      await axios.post(`/api/admin/transactions/${id}/${action}/`);
-      fetchAdminData(); // Refresh data
-    } catch (error) {
-      alert(`${action} failed`);
-    }
+    console.log(`${action} transaction ${id}`);
+    fetchAdminData(); // Mock refresh
   };
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;

@@ -16,25 +16,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  const login = async (email, password) => {
-    try {
-      const response = await axios.post('/api/auth/login/', { email, password });
-      const { access } = response.data; // Assuming JWT response
-      setToken(access);
-      localStorage.setItem('token', access);
-      setUser(response.data.user); // Adjust based on your backend response
-    } catch (error) {
-      throw new Error('Login failed');
-    }
+  // Commented out backend API calls - uncomment when backend is ready
+  // const login = async (email, password) => {
+  //   try {
+  //     const response = await axios.post('/api/auth/login/', { email, password });
+  //     const { access } = response.data; // Assuming JWT response
+  //     setToken(access);
+  //     localStorage.setItem('token', access);
+  //     setUser(response.data.user); // Adjust based on your backend response
+  //   } catch (error) {
+  //     throw new Error('Login failed');
+  //   }
+  // };
+
+  // const register = async (data) => {
+  //   try {
+  //     await axios.post('/api/auth/register/', data);
+  //     // Redirect to login or auto-login
+  //   } catch (error) {
+  //     throw new Error('Registration failed');
+  //   }
+  // };
+
+  // Temporary: Mock login and register for frontend testing
+  const login = async (email) => { // Removed unused 'password'
+    // Mock successful login
+    const mockToken = 'mock-jwt-token';
+    setToken(mockToken);
+    localStorage.setItem('token', mockToken);
+    setUser({ email }); // Mock user data
   };
 
   const register = async (data) => {
-    try {
-      await axios.post('/api/auth/register/', data);
-      // Redirect to login or auto-login
-    } catch (error) {
-      throw new Error('Registration failed');
-    }
+    // Mock successful registration
+    console.log('Registration data:', data);
   };
 
   const logout = () => {
