@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api/', // Your Django backend URL
+  baseURL: 'http://localhost:8000/api/', // Django backend URL
   timeout: 10000,
 });
 
