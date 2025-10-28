@@ -18,7 +18,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Dashboard />} /> {/* Default to dashboard */}
+            <Route path="/" element={<Dashboard />} /> {/* dashboard */}
           </Routes>
         </div>
       </WalletProvider>
