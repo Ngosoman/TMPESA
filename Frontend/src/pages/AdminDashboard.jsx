@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-// import { useAuth } from '../context/AuthContext.jsx'; // Commented out - uncomment when backend is ready
+// import { useAuth } from '../context/AuthContext.jsx'; // Commented out - when backend is ready
 import Button from '../components/Button.jsx';
-// import axios from '../utils/api.js'; // Commented out - uncomment when backend is ready
+// import axios from '../utils/api.js'; // Commented out - when backend is ready
 
 const AdminDashboard = () => {
   // const { user } = useAuth(); // Removed unused 'user'
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
   //   return <div className="text-center mt-10 text-red-500">Access Denied: Admin Only</div>;
   // }
 
-  // Commented out backend API calls - uncomment when backend is ready
+  // Commented out backend API calls -  when backend is ready
   // useEffect(() => {
   //   fetchAdminData();
   // }, []);
